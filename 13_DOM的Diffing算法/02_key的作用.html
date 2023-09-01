@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>02_key的作用</title>
+  </head>
+  <body>
+    <div id="test"></div>
+
+    <script
+      type="text/javascript"
+      src="../js/17.0.1/react.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/17.0.1/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+    <script type="text/babel">
+      class PersonList extends React.Component {
+        state = {
+          personArr: [
+            { id: 1, name: "张三", age: 18 },
+            { id: 2, name: "李四", age: 19 },
+            { id: 3, name: "王五", age: 20 },
+          ],
+        };
+        add = () => {
+          const { personArr } = this.state;
+          const p = { id: personArr.length + 1, name: "老刘", age: 21 };
+          this.setState({ personArr: [p, ...personArr] });
+        };
+        render() {
+          const { personArr } = this.state;
+          return (
+            <div>
+              <button onClick={this.add}>添加老刘</button>
+              <ul>
+                <h2>使用index作为唯一标识</h2>
+                {personArr.map((personObj, index) => {
+                  return (
+                    <li key={index}>
+                      {personObj.name}---{personObj.age}
+                      <input type="text" />
+                    </li>
+                  );
+                })}
+              </ul>
+              <hr />
+              <ul>
+                <h2>使用id作为唯一标识</h2>
+                {personArr.map((personObj) => {
+                  return (
+                    <li key={personObj.id}>
+                      {personObj.name}---{personObj.age}
+                      <input type="text" />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<PersonList />, document.getElementById("test"));
+    </script>
+  </body>
+</html>
